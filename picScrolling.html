@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片无缝滚动</title>
+	<style type="text/css">
+		*{margin:0;padding:0;}
+		#box{width:600px;height:400px;margin:0 auto;position:relative;overflow:hidden;}
+		#box ul{height:400px;position:absolute;list-style:none;}
+		#box ul li{width:600px;height:400px;float:left;}
+		#btns{width: 600px; margin: 20px auto 0; text-align: center;}
+		.arrow{width: 150px; height: 40px; display: inline-block; background-color: #ddd; color: #fff; font-weight: bold; text-decoration: none; font-size: 32px; line-height: 40px; text-align: center; margin: 20px 50px;}				
+	</style>
+	<script type="text/javascript">
+
+		window.onload=function()
+		{
+			//获取要用到的元素
+			var oDiv=document.getElementById("box");
+			var oUl=oDiv.getElementsByTagName("ul")[0];
+			var aLi=oUl.getElementsByTagName("li");
+			var aA=document.getElementsByTagName("a");
+			var prev=document.getElementById('prev');
+			var next=document.getElementById('next');
+			var speed=5;
+			var timer;
+			//复制一份ul的内容
+			oUl.innerHTML+=oUl.innerHTML;
+			oUl.style.width=aLi.length*aLi[0].offsetWidth+"px";
+			//滚动函数
+			function move(){
+				timer=setInterval(function() {						
+						if(oUl.offsetLeft<-oUl.offsetWidth/2)
+						{
+							oUl.style.left=0;	
+						}					
+						if(oUl.offsetLeft>0)
+						{
+							oUl.style.left=-oUl.offsetWidth/2+"px";
+						}					
+						oUl.style.left=oUl.offsetLeft+speed+"px";
+					},30);
+			}
+			move();
+		
+			oDiv.onmouseover=function()
+			{
+				clearInterval(timer);	
+			}
+						
+			oDiv.onmouseout=function()
+			{
+				move();	
+			}
+		
+			prev.onclick=function()
+			{
+				speed=-5;	
+			}
+			
+			next.onclick=function()
+			{
+				speed=5;	
+			}			
+		};
+	</script>
+</head>
+
+<body>   
+	<div id="btns">
+		<a href="javascript:;" id="prev" class="arrow">&lt;</a>
+		<a href="javascript:;" id="next" class="arrow">&gt;</a> 
+	</div>	
+	<div id="box"> 	 	
+		<ul>	  
+	    	<li><a href="javascript:;"><img src="img\1.png"></a></li>
+	    	<li><a href="javascript:;"><img src="img\2.png"></a></li>
+	    	<li><a href="javascript:;"><img src="img\3.png"></a></li>   
+	    </ul>  	   
+	</div>
+</body>
+</html>
